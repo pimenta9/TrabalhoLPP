@@ -1,0 +1,11 @@
+class Base
+    vars id
+
+method showid()
+    vars x
+    begin
+        self.id = 10
+        x = self.id
+        return x
+    end-method
+end-class
