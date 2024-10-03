@@ -4,7 +4,7 @@ public class BoolCompiler {
 
     public static void main(String[] args) {
 
-        System.out.println("From " + args[ 0] + " to " + args[1]);
+        System.out.println("From " + args[0] + " to " + args[1]);
 
         try {
 
