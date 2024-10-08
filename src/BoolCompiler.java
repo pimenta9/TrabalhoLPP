@@ -10,11 +10,12 @@ public class BoolCompiler {
 
             BufferedReader reader = new BufferedReader(new FileReader(args[0]));
             BufferedWriter writer = new BufferedWriter(new FileWriter(args[1]));
+            Translator translator = new Translator();
 
             String line;
             while((line = reader.readLine()) != null) {
 
-                writer.write(line + "\n");
+                writer.write(translator.translate(line));
             }
 
             writer.close();
