@@ -8,4 +8,4 @@
 ->         x = self.id <- 
 ->         return x <- 
 ->     end-method <- 
--> end-class <-
+-> end-class  <- 
