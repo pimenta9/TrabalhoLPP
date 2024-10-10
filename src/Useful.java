@@ -6,7 +6,7 @@ public class Useful {
 
         for (String line : bodyLines) {
 
-            lines.add(line);
+            lines.add("-> " + line + " <-");
         }
     }
 

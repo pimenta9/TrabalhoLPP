@@ -12,8 +12,8 @@ public class BoolCompiler {
 
             BufferedReader reader = new BufferedReader(new FileReader(args[0]));
             BufferedWriter writer = new BufferedWriter(new FileWriter(args[1]));
-            Pattern begin = Pattern.compile("begin"); // colocar ^ após formatar
-            Pattern end = Pattern.compile("end-?"); // colocar ^ após formatar
+            Pattern begin = Pattern.compile("^begin"); // colocar ^ após formatar
+            Pattern end = Pattern.compile("^end-?"); // colocar ^ após formatar
 
             ArrayList<String> lines = new ArrayList<>();
             ArrayList<String> bodyLines = new ArrayList<>();
