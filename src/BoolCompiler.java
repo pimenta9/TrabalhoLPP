@@ -12,8 +12,9 @@ public class BoolCompiler {
 
             BufferedReader reader = new BufferedReader(new FileReader(args[0]));
             BufferedWriter writer = new BufferedWriter(new FileWriter(args[1]));
+
             Pattern begin = Pattern.compile("^begin"); // colocar ^ após formatar
-            Pattern end = Pattern.compile("^end-?"); // colocar ^ após formatar
+            Pattern end = Pattern.compile("^end$|^end-method"); // colocar ^ após formatar
 
             ArrayList<String> lines = new ArrayList<>();
             ArrayList<String> bodyLines = new ArrayList<>();
@@ -39,6 +40,7 @@ public class BoolCompiler {
                     }
 
                     Useful.translateBody(bodyLines, lines);
+                    bodyLines.clear();
 
                     line = Useful.format(line);
                     lines.add(line);

@@ -4,11 +4,11 @@ vars id
 method showid()
 vars x
 begin
--> self.id = 10 <-
--> x = self.id <-
--> io.print(x) <-
--> x = 0 <-
--> return x <-
+self.id = 10 (ATTR)
+x = self.id (ATTR)
+io.print(x) (METHOD-CALL)
+x = 0 (ATTR)
+return x (RETURN)
 end-method
 end-class
 
@@ -18,42 +18,24 @@ vars num
 method calc(x)
 vars y, z
 begin
--> self.id = 10 <-
--> x = self.id <-
--> io.print(x) <-
--> x = 0 <-
--> return x <-
--> z = self.num <-
--> y = x + z <-
--> io.print(y) <-
--> y = new Base <-
--> return y <-
+z = self.num (ATTR)
+y = x + z (ATTR)
+io.print(y) (METHOD-CALL)
+y = new Base (ATTR)
+return y (RETURN)
 end-method
 end-class
 
 main()
 vars p, b, x
 begin
--> self.id = 10 <-
--> x = self.id <-
--> io.print(x) <-
--> x = 0 <-
--> return x <-
--> z = self.num <-
--> y = x + z <-
--> io.print(y) <-
--> y = new Base <-
--> return y <-
--> b = new Base <-
--> p = new Pessoa <-
--> p._prototype = b <-
-->  <-
--> b.id = 111 <-
-->  <-
--> p.num = 123 <-
--> p.id = 321 <-
-->  <-
--> x = 1024 <-
--> p.showid() <-
--> p.calc(x) <-
+b = new Base (ATTR)
+p = new Pessoa (ATTR)
+p._prototype = b (PROTOTYPE)
+b.id = 111 (ATTR)
+p.num = 123 (ATTR)
+p.id = 321 (ATTR)
+x = 1024 (ATTR)
+p.showid() (METHOD-CALL)
+p.calc(x) (METHOD-CALL)
 end
