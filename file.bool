@@ -1,11 +1,16 @@
-class Base
-    vars id
+main()
+vars p, b, x
+begin
+    b = new Base
+    p = new Pessoa
+    p._prototype = b
 
-method showid()
-    vars x
-    begin
-        self.id = 10
-        x = self.id
-        return x
-    end-method
-end-class
+    b.id = 111
+
+    p.num = 123
+    p.id = 321
+
+    x = 1024
+    p.showid()
+    p.calc(x)
+end

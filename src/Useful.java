@@ -6,12 +6,12 @@ public class Useful {
 
         for (String line : bodyLines) {
 
-            lines.add("-> " + line + " <-");
+            lines.add(line);
         }
     }
 
     public static String format (String text) {
 
-        return text;
+        return text.trim().replaceAll(" +", " ");
     }
 }
