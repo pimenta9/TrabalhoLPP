@@ -6,9 +6,12 @@ vars x
 begin
 self.id = 10 (ATTR)
 x = self.id (ATTR)
-io.print(x) (METHOD-CALL)
+load x
+load io
+call print
 x = 0 (ATTR)
-return x (RETURN)
+load x
+ret
 end-method
 end-class
 
@@ -20,9 +23,12 @@ vars y, z
 begin
 z = self.num (ATTR)
 y = x + z (ATTR)
-io.print(y) (METHOD-CALL)
+load y
+load io
+call print
 y = new Base (ATTR)
-return y (RETURN)
+load y
+ret
 end-method
 end-class
 
@@ -36,6 +42,9 @@ b.id = 111 (ATTR)
 p.num = 123 (ATTR)
 p.id = 321 (ATTR)
 x = 1024 (ATTR)
-p.showid() (METHOD-CALL)
-p.calc(x) (METHOD-CALL)
+load p
+call showid
+load x
+load p
+call calc
 end
