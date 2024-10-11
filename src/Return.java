@@ -6,8 +6,6 @@ public class Return {
 
     public static void process (String line, ArrayList<String> lines) {
 
-        // line = "return x"
-
         Pattern pattern = Pattern.compile(" [a-zA-z]+");
         Matcher matcher = pattern.matcher(line);
 

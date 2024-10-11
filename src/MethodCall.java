@@ -6,8 +6,6 @@ public class MethodCall {
 
     public static void process (String line, ArrayList<String> lines) {
 
-        // line = obj.method(a, b)
-
         // se necessário : formatar com line = line.replaceAll(" ", "");
 
         // DÚVIDA.: pode haver mais de um espaço depois da virgula q separa os params?
