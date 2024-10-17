@@ -9,7 +9,9 @@ public class Useful {
 
         String[] regexes = {"._", "=", "^if ", "\\(", "^return"};
 
-        for (String line : bodyLines) {
+        for (int j = 0; j < bodyLines.size(); j++) {
+
+            String line = bodyLines.get(j);
 
             int bodyStmt = 5;
 
@@ -35,7 +37,15 @@ public class Useful {
                     break;
 
                 case 2: // if
-                    // CODE HERE
+                    ArrayList<String> ifBody = new ArrayList<>();
+                    pattern = Pattern.compile("end-if");
+                    while (!pattern.matcher(bodyLines.get(j)).find())
+                    {
+                        ifBody.add(bodyLines.get(j));
+                        j++;
+                    }
+                    ifBody.add(bodyLines.get(j));
+                    If.process(ifBody, lines);
                     break;
 
                 case 3: // method-call

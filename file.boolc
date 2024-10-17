@@ -47,4 +47,16 @@ call showid
 load x
 load p
 call calc
+i = 1024 (ATTR)
+j = 128 (ATTR)
+load i
+load j
+eq
+if 1
+k = j + i (ATTR)
+if i eq j then (IF)
+k = j + i (IF)
+else (IF)
+k = 123 (IF)
+end-if (IF)
 end

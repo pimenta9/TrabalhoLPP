@@ -41,4 +41,14 @@ begin
     x = 1024
     p.showid()
     p.calc(x)
+
+    i = 1024
+    j = 128
+
+    if i eq j then
+        k = j + i
+
+    else
+        k = 123
+    end-if
 end
