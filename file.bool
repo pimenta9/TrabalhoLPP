@@ -47,8 +47,16 @@ begin
 
     if i eq j then
         k = j + i
-
     else
         k = 123
+    end-if
+
+    a = 1024
+    b = obj.num
+
+    if a gt b then
+
+            obj.func()
+ io.print(c)
     end-if
 end

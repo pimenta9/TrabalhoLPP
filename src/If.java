@@ -8,7 +8,7 @@ public class If {
 
         //lines.add(" -> " + body.get(0));
         Pattern pattern = Pattern.compile(" ([a-zA-Z]+) ([a-zA-Z]+) ([a-zA-Z]+) ");
-        Matcher matcher = pattern.matcher(body.get(0));
+        Matcher matcher = pattern.matcher(body.getFirst());
 
         matcher.find();
 
@@ -19,7 +19,8 @@ public class If {
         pattern = Pattern.compile("(^else)|(^end-if)");
         boolean isThereElse = false;
         ArrayList<String> ifBody = new ArrayList<>();
-        for (int i = 1; i < body.size(); i++) {
+        int i;
+        for (i = 1; i < body.size(); i++) {
 
             String line = body.get(i);
 
@@ -47,16 +48,30 @@ public class If {
 
         if (!isThereElse)
         {
-
+            return;
         }
 
-        /**/
-        for (String line : body) {
+        ArrayList<String> elseBody = new ArrayList<>();
+        for (int j = i + 1; j < body.size(); j++) {
 
-            if(!line.isEmpty()) {
-                lines.add(line + " (IF)");
+            String line = body.get(j);
+
+            if (!line.isEmpty()) {
+
+                matcher = pattern.matcher(line);
+
+                if (matcher.find())
+                    break;
+
+                elseBody.add(line);
             }
         }
-        /**/
+
+        ArrayList<String> translatedElseBody = new ArrayList<>();
+
+        Useful.translateBody(elseBody, translatedElseBody);
+
+        lines.add("else " + translatedElseBody.size());
+        lines.addAll(translatedElseBody);
     }
 }

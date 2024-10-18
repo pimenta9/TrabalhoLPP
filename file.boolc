@@ -54,9 +54,17 @@ load j
 eq
 if 1
 k = j + i (ATTR)
-if i eq j then (IF)
-k = j + i (IF)
-else (IF)
-k = 123 (IF)
-end-if (IF)
+else 1
+k = 123 (ATTR)
+a = 1024 (ATTR)
+b = obj.num (ATTR)
+load a
+load b
+gt
+if 5
+load obj
+call func
+load c
+load io
+call print
 end
