@@ -56,7 +56,25 @@ begin
 
     if a gt b then
 
-            obj.func()
- io.print(c)
+        obj.func()
+        io.print(c)
     end-if
+
+    x = a * b
+    x.y = a / b
+
+    x = 81394
+    x.y = 8
+
+    x = a
+    x.y = a
+
+    x = a.b
+    x.y = a.b
+
+    x = obj.func(a, b)
+    x.y = obj.func()
+
+    x = new Class
+    x.y = new Class
 end

@@ -24,7 +24,8 @@ public class BoolCompiler {
 
                 line = Useful.format(line);
 
-                lines.add(line);
+                if (!line.isEmpty())
+                    lines.add(line);
 
                 if(begin.matcher(line).find()) {
 
@@ -47,9 +48,10 @@ public class BoolCompiler {
                 }
             }
 
-            for (String s : lines) {
+            writer.write(lines.getFirst());
+            for (int i = 1; i < lines.size(); i++) {
 
-                writer.write(s + "\n");
+                writer.write("\n" + lines.get(i));
             }
 
             writer.close();

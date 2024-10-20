@@ -5,15 +5,18 @@ import java.util.regex.Pattern;
 public class Lhs {
 
     public static void process(String line, ArrayList<String> lines) {
-        Pattern p = Pattern.compile("([a-zA-Z]+.[a-zA-Z]+)");
 
-        Matcher m = p.matcher(line);
-        if(m.find()) {
-            lines.add("load "+m.group(1));
-            lines.add("set "+m.group(2));
+        Pattern pattern = Pattern.compile("([a-zA-Z]+).([a-zA-Z]+)");
+        Matcher matcher = pattern.matcher(line);
 
-        }else{
-            lines.add("store "+line);
+        if (matcher.find())
+        {
+            lines.add("load " + matcher.group(1));
+            lines.add("set " + matcher.group(2));
+        }
+        else
+        {
+            lines.add("store " + line);
         }
     }
 }

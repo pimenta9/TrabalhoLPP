@@ -1,61 +1,83 @@
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class Rhs {
 
-        public static void process(String lhs, String rhs, ArrayList<String> lines) {
+        public static void process(String line, ArrayList<String> lines) {
 
-            if (rhs.matches("\\d+")) {
-                lines.add("const " + rhs);  // Número
+            Pattern pattern;
+            Matcher matcher;
+
+            String[] regexes = {"^new ", "\\(", "\\.", "[0-9]+", "[+\\-*/]"};
+
+            int i;
+            for (i = 0; i < regexes.length; i++)
+            {
+                pattern = Pattern.compile(regexes[i]);
+
+                if (pattern.matcher(line).find())
+                    break;
             }
-            else if (rhs.contains(".")) {
-                String[] parts = rhs.split("\\.");
-                if (rhs.matches("[a-zA-Z]+\\.[a-zA-Z]+\\(.*\\)")) {
-                    MethodCall.process(rhs, lines);
-                } else {
-                    lines.add("load " + parts[0]);
-                    lines.add("get " + parts[1]);
-                }
+
+            switch (i)
+            {
+                case 0:
+                    lines.add(line);
+                    break;
+
+                case 1:
+                    MethodCall.process(line, lines);
+                    break;
+
+                case 2:
+                    pattern = Pattern.compile("([a-zA-Z]+).([a-zA-Z]+)");
+                    matcher = pattern.matcher(line);
+                    if (matcher.find())
+                    {
+                        lines.add("load " + matcher.group(1));
+                        lines.add("get " + matcher.group(2));
+                    }
+                    break;
+
+                case 3:
+                    lines.add("const " + line);
+                    break;
+
+                case 4:
+                    pattern = Pattern.compile("([a-zA-Z]+) ([+\\-*/]) ([a-zA-Z]+)");
+                    matcher = pattern.matcher(line);
+                    if (matcher.find())
+                    {
+                        lines.add("load " + matcher.group(1));
+                        lines.add("load " + matcher.group(3));
+                        switch (matcher.group(2))
+                        {
+                            case "+":
+                                lines.add("add");
+                                break;
+
+                            case "-":
+                                lines.add("sub");
+                                break;
+
+                            case "*":
+                                lines.add("mul");
+                                break;
+
+                            case "/":
+                                lines.add("div");
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+
+                default:
+                    lines.add("load " + line);
+                    break;
             }
-            else if (rhs.matches("\\s*new\\s+([a-zA-Z]+)")) {
-                Matcher matcher = Pattern.compile("\\s*new\\s+([a-zA-Z]+)").matcher(rhs);
-                if (matcher.find()) {
-                    String className = matcher.group(1);
-                    lines.add("new " + className);
-                }
-            }
-            else {
-                lines.add("load " + rhs);
-            }
-            Lhs.process(lhs, lines);
         }
-        /*
-        if (matcher.find()) { // ESTA CORRETO
-        String lhs = matcher.group(1);
-        String arg1 = matcher.group(2);
-        String op = matcher.group(3);
-        String arg2 = matcher.group(4);
-
-        lines.add("load " + arg1);
-        lines.add("load " + arg2);
-
-        switch (op) {
-            case "+":
-                lines.add("add");
-                break;
-            case "-":
-                lines.add("sub");
-                break;
-            case "*":
-                lines.add("mul");
-                break;
-            case "/":
-                lines.add("div");
-                break;
-            default:
-                throw new IllegalArgumentException("Erro. Operador desconhecido: " + op);
-        }
-        Lhs.process(lhs, lines);
-    }*/
 }
