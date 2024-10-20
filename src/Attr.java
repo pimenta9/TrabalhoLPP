@@ -5,58 +5,85 @@ import java.util.regex.Pattern;
 public class Attr {
 
     public static void process(String line, ArrayList<String> lines) {
-        Pattern attrPattern = Pattern.compile("([a-zA-Z]+)\\.([a-zA-Z]+)\\s*=\\s*([a-zA-Z0-9.]+)");
-        Pattern simplePattern = Pattern.compile("([a-zA-Z]+)\\s*=\\s*([a-zA-Z0-9.]+)");
-        Pattern opPattern = Pattern.compile("([a-zA-Z]+)\\s*=\\s*([a-zA-Z0-9]+)\\s*([+\\-*/])\\s*([a-zA-Z0-9]+)"); // o "-" será tratado para subtração e não como caracter especial
+        Pattern simplePattern = Pattern.compile("([a-zA-Z]+)\\s*=\\s*([a-zA-Z0-9.]+)\\s*([a-zA-Z0-9.]+)?");
+        Pattern opPattern = Pattern.compile("([a-zA-Z]+)\\s*=\\s*([a-zA-Z0-9]+)\\s*([+\\-*/])\\s*([a-zA-Z0-9]+)");
+        Pattern p = Pattern.compile("([a-zA-Z]+).([a-zA-Z]+)\\s*=\\s*([a-zA-Z0-9.]+)");
+        Pattern op2Pattern = Pattern.compile("([a-zA-Z]+).([a-zA-Z]+)\\s*=\\s*([a-zA-Z0-9]+)\\s*([+\\-*/])\\s*([a-zA-Z0-9]+)");
 
         Matcher matcher;
-        //do tipo <lhs> = <arg-bin> <op> <arg-bin> ‘\n’
+        // Padrão para operação com operadores (e.g., lhs = arg1 + arg2)
         matcher = opPattern.matcher(line);
-        if (matcher.find()) {
+        if (matcher.find()) { // ESTA CORRETO
             String lhs = matcher.group(1);
             String arg1 = matcher.group(2);
             String op = matcher.group(3);
             String arg2 = matcher.group(4);
 
             lines.add("load " + arg1);
-            lines.add(op + " " + arg2);
-            lines.add("store " + lhs);
+            lines.add("load " + arg2);
+
+            switch (op) {
+                case "+":
+                    lines.add("add");
+                    break;
+                case "-":
+                    lines.add("sub");
+                    break;
+                case "*":
+                    lines.add("mul");
+                    break;
+                case "/":
+                    lines.add("div");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Erro. Operador desconhecido: " + op);
+            }
+            Lhs.process(lhs, lines);
         }
-        //do tipo <lhs> = <arg> ‘\n’
-        else if ((matcher = attrPattern.matcher(line)).find()) {
+        else if((matcher = op2Pattern.matcher(line)).find()) {
             String lhs = matcher.group(1);
-            String attribute = matcher.group(2);
+            String arg1 = matcher.group(2);
+            String arg2 = matcher.group(3);
+            String op = matcher.group(4);
+            String arg3 = matcher.group(5);
+
+            lines.add("load " + arg1);
+            lines.add("load " + arg3);
+
+            switch (op) {
+                case "+":
+                    lines.add("add");
+                    break;
+                case "-":
+                    lines.add("sub");
+                    break;
+                case "*":
+                    lines.add("mul");
+                    break;
+                case "/":
+                    lines.add("div");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Erro. Operador desconhecido: " + op);
+            }
+            Lhs.process(lhs, lines);
+
+        }
+        else if ((matcher = p.matcher(line)).find()) {
+            String lhs = matcher.group(1);
             String rhs = matcher.group(3);
 
-            if (rhs.matches("\\d+")) { // verificação se é um numero
-                lines.add("const " + rhs);
-            } else if (rhs.contains(".")) {
-                String[] parts = rhs.split("\\.");
-                lines.add("load " + parts[0]);
-                lines.add("get " + parts[1]);   // Obtém o atributo
-            } else {
-                lines.add("load " + rhs);       // Carrega a variável
-            }
-            lines.add("load " + lhs);
-            lines.add("set " + attribute);
-        }
-        // Verificação se é uma atribuição simples
-        else if ((matcher = simplePattern.matcher(line)).find()) {
-            String lhs = matcher.group(1);  // Nome da variável à esquerda
-            String rhs = matcher.group(2);  // Valor ou variável à direita
+            Rhs.process(lhs, rhs, lines);
+        } else if ((matcher = simplePattern.matcher(line)).find()) {
+            String lhs = matcher.group(1);
+            String rhs = matcher.group(2);
 
-            // Verifica se o lado direito é uma constante
-            if (rhs.matches("\\d+")) {
-                lines.add("const " + rhs);      // Carrega o valor constante
-            } else if (rhs.contains(".")) {
-                // Se for um atributo de outro objeto, gera o código apropriado
-                String[] parts = rhs.split("\\.");
-                lines.add("load " + parts[0]);  // Carrega o objeto
-                lines.add("get " + parts[1]);   // Obtém o atributo
-            } else {
-                lines.add("load " + rhs);
+            if (matcher.group(3) != null) {
+
+                rhs = "new " + matcher.group(3);
             }
-            lines.add("store " + lhs);
+
+            Rhs.process(lhs, rhs, lines);
         }
     }
 }
