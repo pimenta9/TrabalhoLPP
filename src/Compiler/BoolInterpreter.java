@@ -3,7 +3,6 @@ import java.util.*;
 
 public class BoolInterpreter {
 
-    // Instância de Classificacoes que contém a lógica de execução
     private Classificacoes classificacoes = new Classificacoes();
 
     public static void main(String[] args) {
