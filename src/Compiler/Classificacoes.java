@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class classificacoes {
+public class Classificacoes {
     private Stack<Integer> stack = new Stack<>();
     private Map<String, Integer> variables = new HashMap<>();
     private Map<String, ClassObj> objects = new HashMap<>();
