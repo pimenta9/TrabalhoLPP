@@ -32,6 +32,7 @@ begin
     b = new Base
     p = new Pessoa
     p._prototype = b
+
     b.id = 111
 
     p.num = 123
@@ -40,4 +41,40 @@ begin
     x = 1024
     p.showid()
     p.calc(x)
+
+    i = 1024
+    j = 128
+
+    if i eq j then
+        k = j + i
+    else
+        k = 123
+    end-if
+
+    a = 1024
+    b = obj.num
+
+    if a gt b then
+
+        obj.func()
+        io.print(c)
+    end-if
+
+    x = a * b
+    x.y = a / b
+
+    x = 81394
+    x.y = 8
+
+    x = a
+    x.y = a
+
+    x = a.b
+    x.y = a.b
+
+    x = obj.func(a, b)
+    x.y = obj.func()
+
+    x = new Class
+    x.y = new Class
 end
