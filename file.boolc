@@ -1,5 +1,5 @@
 class Base
-vars id
+vars id, x
 method showid()
 vars x
 begin
