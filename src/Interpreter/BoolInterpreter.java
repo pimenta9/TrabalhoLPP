@@ -35,7 +35,8 @@ public class BoolInterpreter {
 
                 while (!tokens[0].equals("end-class"))
                 {
-                    ClassMethod m = new ClassMethod(tokens[1]);
+                    String methodName = tokens[1];
+                    ClassMethod m = new ClassMethod(methodName);
 
                     tokens = reader.readLine().split(" |, ");
 
@@ -56,9 +57,13 @@ public class BoolInterpreter {
                     }
                     line = reader.readLine();
 
+                    c.methods.put(methodName, m);
+
                     tokens = line.split(" ");
                 }
             }
+
+
         }
         catch (IOException e)
         {
