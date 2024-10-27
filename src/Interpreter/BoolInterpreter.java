@@ -3,8 +3,7 @@ package Interpreter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BoolInterpreter
 {
@@ -13,6 +12,11 @@ public class BoolInterpreter
         Map<String, ClassDef> classes = ClassBuilder.buildClass(args[0]);
 
         Map<String, Integer> variables = new HashMap<>();
+
+        TreeMap<Integer, ClassObject> objects = new TreeMap<>();
+        objects.put(0, new ClassObject());
+
+        Interpreter interpreter = new Interpreter(classes, variables, objects);
 
         try
         {
@@ -31,9 +35,10 @@ public class BoolInterpreter
 
                 line = reader.readLine();
             }
-            line = reader.readLine();
 
-            ////////
+            tokens = reader.readLine().split(" ");
+
+
 
             reader.close();
         }

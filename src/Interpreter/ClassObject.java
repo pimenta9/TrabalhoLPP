@@ -8,6 +8,11 @@ public class ClassObject
     public Map<String, Integer> attributes;
     public Map<String, ClassMethod> methods;
 
+    public ClassObject ()
+    {
+
+    }
+
     public ClassObject (ClassDef c)
     {
         this.attributes = c.attributes;
