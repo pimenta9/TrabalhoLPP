@@ -11,12 +11,13 @@ public class BoolInterpreter
     {
         Map<String, ClassDef> classes = ClassBuilder.buildClass(args[0]);
 
-        Map<String, Integer> variables = new HashMap<>();
+        Map<String, Integer> mainVars = new HashMap<>();
 
         TreeMap<Integer, ClassObject> objects = new TreeMap<>();
         objects.put(0, new ClassObject());
+        objects.put(-1, new ClassObject(1));
 
-        Interpreter interpreter = new Interpreter(classes, variables, objects);
+        Interpreter interpreter = new Interpreter(classes, objects);
 
         try
         {
@@ -31,14 +32,23 @@ public class BoolInterpreter
             if (tokens[0].equals("vars"))
             {
                 for (int i = 1; i < tokens.length; i++)
-                    variables.put(tokens[i], 0);
+                    mainVars.put(tokens[i], 0);
 
                 line = reader.readLine();
             }
 
-            tokens = reader.readLine().split(" ");
+            ArrayList<String> mainBody = new ArrayList<>();
+            line = reader.readLine();
+            tokens = line.split(" ");
+            while (!tokens[0].equals("end"))
+            {
+                mainBody.add(line);
 
+                line = reader.readLine();
+                tokens = line.split(" ");
+            }
 
+            interpreter.run(mainVars, mainBody);
 
             reader.close();
         }

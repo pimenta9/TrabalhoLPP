@@ -58,7 +58,7 @@ public class ClassBuilder {
                     }
                     line = reader.readLine();
 
-                    c.methods.put(methodSignature, m);
+                    c.methods.put(methodSignature.split("\\(")[0], m);
 
                     tokens = line.split(" ");
                 }

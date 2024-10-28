@@ -13,9 +13,18 @@ public class ClassObject
 
     }
 
+    public ClassObject (int n)
+    {
+        this.methods = new HashMap<>();
+        this.methods.put("print", new ClassMethod());
+    }
+
     public ClassObject (ClassDef c)
     {
-        this.attributes = c.attributes;
-        this.methods = c.methods;
+        this.attributes = new HashMap<>();
+        this.attributes.putAll(c.attributes);
+        attributes.put("_prototype", 0);
+        this.methods = new HashMap<>();
+        this.methods.putAll(c.methods);
     }
 }
