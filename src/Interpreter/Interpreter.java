@@ -26,7 +26,11 @@ public class Interpreter
 
         for (int i = 0; i < body.size(); i++)
         {
-            System.out.println(body.get(i));
+            // System.out.println(body.get(i));
+
+            System.out.println(i + "---------------------------------------");
+            for (Integer element : stack)
+                System.out.println(element);
 
             tokens = body.get(i).split(" ");
 
@@ -117,14 +121,14 @@ public class Interpreter
                         return 0;
                     }
 
-                    System.out.println(tokens[1]);
+                    // System.out.println(tokens[1]);
                     objReference = stack.pop();
-                    System.out.println(objReference);
+                    // System.out.println(objReference);
                     obj = objects.get(objReference);
                     while (!obj.methods.containsKey(tokens[1]))
                     {
-                        System.out.println("...");
-                        System.out.println(obj.attributes.get("_prototype"));
+                        // System.out.println("...");
+                        // System.out.println(obj.attributes.get("_prototype"));
                         obj = objects.get(obj.attributes.get("_prototype"));
                     }
 
@@ -134,10 +138,10 @@ public class Interpreter
                     methodBody.addAll(obj.methods.get(tokens[1]).body);
 
                     ArrayList<String> params = obj.methods.get(tokens[1]).parameters;
-                    System.out.println(obj.methods.get(tokens[1]).parameters.size());
+                    // System.out.println(obj.methods.get(tokens[1]).parameters.size());
                     for (int j = params.size() - 1; j >= 0; j--)
                     {
-                        System.out.println(j + " " + params.get(j));
+                        // System.out.println(j + " " + params.get(j));
                         String varName = params.get(j);
                         methodVars.put(varName, stack.pop());
                     }

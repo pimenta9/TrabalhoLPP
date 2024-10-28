@@ -52,6 +52,7 @@ public class Useful {
 
                 case 3: // method-call
                     MethodCall.process(line, lines);
+                    lines.add("pop");
                     break;
 
                 case 4:

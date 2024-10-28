@@ -12,6 +12,7 @@ store x
 load x
 load io
 call print
+pop
 const 0
 store x
 load x
@@ -33,6 +34,7 @@ store y
 load y
 load io
 call print
+pop
 new Base
 store y
 load y
@@ -62,7 +64,9 @@ const 1024
 store x
 load p
 call showid
+pop
 load x
 load p
 call calc
+pop
 end
