@@ -26,7 +26,7 @@ public class Interpreter
 
         for (int i = 0; i < body.size(); i++)
         {
-            // System.out.println(body.get(i));
+//            System.out.println(body.get(i));
 
             System.out.println(i + "---------------------------------------");
             for (Integer element : stack)

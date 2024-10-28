@@ -8,7 +8,7 @@ public class Lhs {
 
     public static void process(String line, ArrayList<String> lines) {
 
-        Pattern pattern = Pattern.compile("([a-zA-Z]+).([a-zA-Z]+)");
+        Pattern pattern = Pattern.compile("([a-zA-Z]+)\\.([a-zA-Z]+)");
         Matcher matcher = pattern.matcher(line);
 
         if (matcher.find())
