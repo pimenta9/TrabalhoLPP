@@ -1,6 +1,8 @@
 main()
 vars x y
 begin
+    x = 7
+    y = 9
     x = x + y
     io.print(x)
 end

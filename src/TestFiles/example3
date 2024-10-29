@@ -1,0 +1,10 @@
+class Class
+end-class
+
+main ()
+vars x, y, z
+begin
+x = new Class
+y = new Class
+z = new Class
+end

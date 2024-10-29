@@ -69,6 +69,10 @@ public class Useful {
 
     public static String format (String text) {
 
-        return text.trim().replaceAll(" +", " ");
+        text = text.trim().replaceAll(" +", " ");
+        String[] tokens = text.split(" ");
+        if (tokens[0].equals("vars"))
+            text = text.replaceAll(" ,", ",");
+        return text;
     }
 }

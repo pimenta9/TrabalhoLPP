@@ -1,16 +1,12 @@
+class Animal
+end-class
 main()
-vars x y
+vars a, b, c
 begin
-const 7
-store x
-const 9
-store y
-load x
-load y
-add
-store x
-load x
-load io
-call print
-pop
+new Animal
+store a
+new Animal
+store b
+const 3
+store c
 end

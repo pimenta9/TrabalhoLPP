@@ -1,0 +1,26 @@
+class Fat
+method fat(x)
+vars b, a, y, z, w
+begin
+    b = 0
+
+    if x eq b then
+        return 1
+
+    a = 1
+    w = x - a
+    z = fat(w)
+    y = x * z
+    io.print(y)
+
+end-method
+end-class
+
+main()
+vars x, y, z
+begin
+    x = new Fat
+    y = 5
+    z = x.fat(y)
+    io.print(z)
+end

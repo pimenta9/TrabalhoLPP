@@ -6,5 +6,5 @@ vars a, b, c
 begin
     a = new Animal
     b = new Animal
-    c = 3
+    c = new Animal
 end
