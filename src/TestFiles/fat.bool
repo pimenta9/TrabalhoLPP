@@ -1,17 +1,22 @@
 class Fat
 method fat(x)
-vars b, a, y, z, w
+vars b, a, y, z, w, c
 begin
     b = 0
 
+    c = new Fat
+
     if x eq b then
-        return 1
+        b = 1
+        return c
+    end-if
 
     a = 1
     w = x - a
-    z = fat(w)
+    z = c.fat(w)
     y = x * z
-    io.print(y)
+
+    return y
 
 end-method
 end-class

@@ -1,7 +1,7 @@
 class Class
 end-class
 
-main ()
+main()
 vars x, y, z
 begin
 x = new Class

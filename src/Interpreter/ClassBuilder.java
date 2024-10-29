@@ -28,7 +28,7 @@ public class ClassBuilder {
                 {
                     for (int i = 1; i < tokens.length; i++)
                     {
-                        c.attributes.put(tokens[i], 0);
+                        c.attributes.put(tokens[i], 0L);
                     }
 
                     tokens = reader.readLine().split(" ");
@@ -45,7 +45,7 @@ public class ClassBuilder {
                     {
                         for (int i = 1; i < tokens.length; i++)
                         {
-                            m.localVariables.put(tokens[i], 0);
+                            m.localVariables.put(tokens[i], 0L);
                         }
                         tokens = reader.readLine().split(" ");
                     }

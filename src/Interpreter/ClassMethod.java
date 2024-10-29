@@ -10,7 +10,7 @@ public class ClassMethod
 {
     public String name;
     public String signature;
-    public Map<String, Integer> localVariables;
+    public Map<String, Long> localVariables;
     public ArrayList<String> parameters;
     public ArrayList<String> body;
 
@@ -25,7 +25,7 @@ public class ClassMethod
     {
         this.signature = signature;
         this.name = signature.split("\\(")[0];
-        this.localVariables = new HashMap<String, Integer>();
+        this.localVariables = new HashMap<String, Long>();
         this.body = new ArrayList<>();
         this.parameters = new ArrayList<>();
         Pattern pattern = Pattern.compile("\\(([a-zA-z]+)|, ([a-zA-z]+)");

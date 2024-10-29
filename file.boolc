@@ -7,6 +7,6 @@ new Animal
 store a
 new Animal
 store b
-const 3
+new Animal
 store c
 end

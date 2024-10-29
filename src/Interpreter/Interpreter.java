@@ -4,40 +4,51 @@ import java.util.*;
 
 public class Interpreter
 {
-    Stack<Integer> stack = new Stack();
+    Stack<Long> stack = new Stack();
     Map<String, ClassDef> classes;
-    TreeMap<Integer, ClassObject> objects;
+    TreeMap<Long, ClassObject> objects;
+    int collectorRoutine = 0;
+    GarbageCollector collector = new GarbageCollector();
 
-    public Interpreter (Map<String, ClassDef> c, TreeMap<Integer, ClassObject> o)
+    public Interpreter (Map<String, ClassDef> c, TreeMap<Long, ClassObject> o)
     {
         classes = c;
         objects = o;
+        collector.stack = stack;
+        collector.objects = objects;
     }
 
-    public int run (Map<String, Integer> vars, ArrayList<String> body)
+    public Long run (Map<String, Long> vars, ArrayList<String> body)
     {
-        vars.put("io", -1);
+        vars.put("io", -1L);
 
         String[] tokens;
 
-        int value, v1, v2, objReference;
+        Long value, v1, v2, objReference;
 
         ClassObject obj;
 
         for (int i = 0; i < body.size(); i++)
         {
-//            System.out.println(body.get(i));
+            collectorRoutine = collectorRoutine%5;
+            if (collectorRoutine == 4)
+            {
+                collector.collect(vars);
+            }
+            collectorRoutine++;
 
-            System.out.println(i + "---------------------------------------");
-            for (Integer element : stack)
-                System.out.println(element);
+//            System.out.println(i + "---------------------------------------");
+//            for (Long element : stack)
+//                System.out.println(element);
+//
+//            System.out.println(body.get(i));
 
             tokens = body.get(i).split(" ");
 
             switch (tokens[0])
             {
                 case "const":
-                    stack.push(Integer.parseInt(tokens[1]));
+                    stack.push(Long.parseLong(tokens[1]));
                     break;
 
                 case "load":
@@ -76,7 +87,7 @@ public class Interpreter
                 case "new":
                     ClassObject o = new ClassObject(classes.get(tokens[1]));
 
-                    int reference = objects.lastKey() + 1;
+                    Long reference = objects.lastKey() + 1;
 
                     for (ClassMethod m : o.methods.values())
                     {
@@ -118,7 +129,7 @@ public class Interpreter
                     {
                         stack.pop();
                         System.out.println(stack.pop());
-                        return 0;
+                        return 0L;
                     }
 
                     // System.out.println(tokens[1]);
@@ -132,7 +143,7 @@ public class Interpreter
                         obj = objects.get(obj.attributes.get("_prototype"));
                     }
 
-                    Map<String, Integer> methodVars = new HashMap<>();
+                    Map<String, Long> methodVars = new HashMap<>();
                     methodVars.putAll(obj.methods.get(tokens[1]).localVariables);
                     ArrayList<String> methodBody = new ArrayList<>();
                     methodBody.addAll(obj.methods.get(tokens[1]).body);
@@ -154,10 +165,10 @@ public class Interpreter
                     v2 = stack.pop();
                     v1 = stack.pop();
                     if(v1>v2){
-                        stack.push(1);
+                        stack.push(1L);
                     }
                     else{
-                        stack.push(0);
+                        stack.push(0L);
                     }
 
                     break;
@@ -166,10 +177,10 @@ public class Interpreter
                     v2 = stack.pop();
                     v1 = stack.pop();
                     if(v1>=v2){
-                        stack.push(1);
+                        stack.push(1L);
                     }
                     else{
-                        stack.push(0);
+                        stack.push(0L);
                     }
 
                     break;
@@ -178,10 +189,10 @@ public class Interpreter
                     v2 = stack.pop();
                     v1 = stack.pop();
                     if(v1<v2){
-                        stack.push(1);
+                        stack.push(1L);
                     }
                     else{
-                        stack.push(0);
+                        stack.push(0L);
                     }
 
                     break;
@@ -190,32 +201,32 @@ public class Interpreter
                     v2 = stack.pop();
                     v1 = stack.pop();
                     if(v1<=v2){
-                        stack.push(1);
+                        stack.push(1L);
                     }
                     else{
-                        stack.push(0);
+                        stack.push(0L);
                     }
                     break;
 
                 case "eq":
                     v2 = stack.pop();
                     v1 = stack.pop();
-                    if(v1==v2){
-                        stack.push(1);
+                    if(Objects.equals(v1, v2)){
+                        stack.push(1L);
                     }
                     else{
-                        stack.push(0);
+                        stack.push(0L);
                     }
                     break;
 
                 case "ne":
                     v2 = stack.pop();
                     v1 = stack.pop();
-                    if(v1!=v2){
-                        stack.push(1);
+                    if(!Objects.equals(v1, v2)){
+                        stack.push(1L);
                     }
                     else{
-                        stack.push(0);
+                        stack.push(0L);
                     }
                     break;
 
@@ -227,7 +238,7 @@ public class Interpreter
 
                 case "if":
                     v1 = stack.pop();
-                    if(v1!=1){
+                    if(v1!=1L){
                         i = i + Integer.parseInt(tokens[1]);
                     }
 
@@ -235,7 +246,7 @@ public class Interpreter
 
                 case "else":
                     v1 = stack.pop();
-                    if(v1==1){
+                    if(v1==1L){
                         i = i + Integer.parseInt(tokens[1]);
                     }
                     break;
@@ -249,6 +260,6 @@ public class Interpreter
             }
         }
 
-        return 0;
+        return 0L;
     }
 }
