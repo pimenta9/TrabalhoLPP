@@ -1,10 +1,31 @@
-class Animal
+class Fat
+method fat(x)
+vars b, a, y, z, w, c
+begin
+    b = 0
+
+    c = new Fat
+
+    if x eq b then
+        b = 1
+        return c
+    end-if
+
+    a = 1
+    w = x - a
+    z = c.fat(w)
+    y = x * z
+
+    return y
+
+end-method
 end-class
 
 main()
-vars a, b, c
+vars x, y, z
 begin
-    a = new Animal
-    b = new Animal
-    c = new Animal
+    x = new Fat
+    y = 2
+    z = x.fat(y)
+    io.print(z)
 end

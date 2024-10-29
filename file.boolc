@@ -1,12 +1,50 @@
-class Animal
+class Fat
+method fat(x)
+vars b, a, y, z, w, c
+begin
+const 0
+store b
+new Fat
+store c
+load x
+load b
+eq
+if 4
+const 1
+store b
+load c
+ret
+const 1
+store a
+load x
+load a
+sub
+store w
+load w
+load c
+call fat
+store z
+load x
+load z
+mul
+store y
+load y
+ret
+end-method
 end-class
 main()
-vars a, b, c
+vars x, y, z
 begin
-new Animal
-store a
-new Animal
-store b
-new Animal
-store c
+new Fat
+store x
+const 2
+store y
+load y
+load x
+call fat
+store z
+load z
+load io
+call print
+pop
 end

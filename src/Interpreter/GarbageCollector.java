@@ -10,10 +10,13 @@ public class GarbageCollector
     Stack<Long> stack = new Stack();
     TreeMap<Long, ClassObject> objects;
     int currentColor;
+    TreeMap<Long, ClassObject> usedObjects;
 
-    public GarbageCollector()
+    public GarbageCollector(Stack<Long> s)
     {
+        this.usedObjects = new TreeMap<Long, ClassObject>();
         currentColor = 0;
+        stack = s;
     }
 
     public void dfs (Long ref)
@@ -36,8 +39,9 @@ public class GarbageCollector
         }
     }
 
-    public void collect (Map<String, Long> vars)
+    public void collect (Map<Long, ClassObject> used)
     {
+        usedObjects.putAll(used);
 //        System.out.println("COLLECTOR");
         for (Long element : stack)
         {
@@ -47,18 +51,15 @@ public class GarbageCollector
             }
         }
 
-        for (Map.Entry<String, Long> entry : vars.entrySet())
+        for (Map.Entry<Long, ClassObject> entry : usedObjects.entrySet())
         {
-            if (entry.getValue() > 2147483647L)
-            {
-                this.dfs(entry.getValue());
-            }
+                this.dfs(entry.getKey());
         }
 
         ArrayList<Long> toBeDeleted = new ArrayList<Long>();
         for (Map.Entry<Long, ClassObject> entry : objects.entrySet())
         {
-            if (entry.getValue().color!=currentColor)
+            if (entry.getValue().color != currentColor && entry.getKey() > 2147483647L)
             {
                 toBeDeleted.add(entry.getKey());
             }

@@ -8,7 +8,7 @@ public class Interpreter
     Map<String, ClassDef> classes;
     TreeMap<Long, ClassObject> objects;
     int collectorRoutine = 0;
-    GarbageCollector collector = new GarbageCollector();
+    GarbageCollector collector = new GarbageCollector(stack);
 
     public Interpreter (Map<String, ClassDef> c, TreeMap<Long, ClassObject> o)
     {
@@ -30,18 +30,28 @@ public class Interpreter
 
         for (int i = 0; i < body.size(); i++)
         {
+            Map<Long, ClassObject> usedObjects = new TreeMap<Long, ClassObject>();
             collectorRoutine = collectorRoutine%5;
             if (collectorRoutine == 4)
             {
-                collector.collect(vars);
+                for (Map.Entry<String, Long> entry : vars.entrySet())
+                {
+                    if (entry.getValue() > 2147483647L)
+                    {
+                        usedObjects.put(entry.getValue(), objects.get(entry.getValue()));
+                    }
+                }
+
+                collector.collect(usedObjects);
+
             }
             collectorRoutine++;
 
-//            System.out.println(i + "---------------------------------------");
-//            for (Long element : stack)
-//                System.out.println(element);
-//
-//            System.out.println(body.get(i));
+            System.out.println(i + "---------------------------------------");
+            for (Long element : stack)
+                System.out.println(element);
+
+            System.out.println(body.get(i));
 
             tokens = body.get(i).split(" ");
 
