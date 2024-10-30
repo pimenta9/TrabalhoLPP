@@ -24,6 +24,9 @@ public class GarbageCollector
 //        System.out.print(ref + " ");
 //        System.out.println(objects.get(ref));
         ClassObject obj = objects.get(ref);
+        if (obj == null){
+            return;
+       }
 
         obj.color = currentColor;
 
